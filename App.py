@@ -41,13 +41,13 @@ class_names=['Female', 'Male']
 
 
     
-@app.route("/index")
+@app.route("/spec")
 def Index():
-    return render_template('index.html')
+    return render_template('home.html')
 
 @app.route("/")
 def home():
-    return render_template('home.html')
+    return render_template('index.html')
 
 @app.route("/record")
 def record():
