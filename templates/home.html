@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}   Prediction using Flask{% endblock %}          
+ 
+
+        <h1><div style="text-align:center;"><font color="blue"> Gender Recognition from voice</font>   </div>   </h1>
+
+        <br>
+
+        <a href="/record" ><button class="btn btn-outline-info" style="float: right;">Click Here to recod your voice! </button></a> 
+
+
+     
+        {% block page_content %}
+        <h1><div style="text-align:center;"><font color="blue"> Gender Recognition from voice</font>   </div>   </h1>
+
+        <br>
+
+        <div class="container">
+         <div class="row">
+             <div class="col-6">
+        <form method="POST" action="/predict" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="Name"><p class="font-weight-bold">
+                    Name : 
+                </p> </label>
+                <input type="test" name="Name">
+            </div>
+           
+           
+
+
+   
+
+            <div class="form-group">
+              
+            <label for="file" class="upload-label">
+              <p class="font-weight-bold">   Choose an audio file...   </p> 
+          </label>
+          <input type="file" name="file"  accept="audio/*" capture id="recorder">
+          <audio id="player" controls></audio>
+          <script>
+            const recorder = document.getElementById('recorder');
+            const player = document.getElementById('player');
+          
+            recorder.addEventListener('change', function(e) {
+              const file = e.target.files[0];
+              const url = URL.createObjectURL(file);
+              // Do something with the audio file.
+              player.src = url;
+            });
+          </script>
+          
+           </div>
+          
+     
+                <button type="submit" class="btn btn-primary" vaslue="Submit">Submit</button>
+              </div>  
+            </div>
+            </div>
+            
+        </form>
+
+
+        {% endblock %}   

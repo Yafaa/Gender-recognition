@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}   Prediction using Flask{% endblock %}          
+ 
+
+        <h1><div style="text-align:center;"><font color="blue">Gender Recognition by Voice</font>   </div>   </h1>
+
+        <br>
+
+        <a href="/record" ><button class="btn btn-outline-info" style="float: right;">Click Here to recod your voice! </button></a> 
+
+
+     
+        {% block page_content %}
+        <div class="alert alert-primary" role="alert">
+            This is a all the models list , choose what suit you the best!
+          </div>
+
+        <ul class="list-group">
+            <li class="list-group-item active">Audio Models</li>
+            <li class="list-group-item"> <a href="/rec"> Mel Spectrogram           </a></li>
+            <li class="list-group-item"> <a href="/"> Upload audio of Mel Spectrogram   </a></li>
+            <li class="list-group-item"> <a href="/recQ">Constant-Q transform       </a></li>
+            <li class="list-group-item"> <a href="/rec20">MFCC 20                    </a></li>
+            <li class="list-group-item"> <a href="/rec40">MFCC 40                    </a></li>
+            <li class="list-group-item"> <a href="/recW">Morlet Wavelet Transfrom   </a> </li>
+            <li class="list-group-item"><a href="/recC"> Chroma feature             </a></li>
+
+          </ul>
+
+        {% endblock %}   
