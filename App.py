@@ -1,3 +1,4 @@
+#import section
 from flask import Flask , render_template, request,abort, current_app, make_response
 import os
 from werkzeug.utils import secure_filename
@@ -21,9 +22,9 @@ from sklearn.ensemble import VotingClassifier
 import pickle
 from skimage.transform import resize
 import pywt
+import config 
 
-
-
+#define the app
 app = Flask(__name__)
 
 # Attributes 
@@ -41,17 +42,17 @@ class_names=['Female', 'Male']
 
 
     
-@app.route("/index")
+@app.route("/spec")
 def Index():
-    return render_template('index.html')
+    return render_template(config.home)
 
 @app.route("/")
 def home():
-    return render_template('home.html')
+    return render_template(config.index)
 
 @app.route("/record")
 def record():
-    return render_template('record.html')
+    return render_template(config.record)
 
 
 def scale_minmax(X, min=0.0, max=1.0):
@@ -85,10 +86,10 @@ def Process(file):
 
 def Model(file_path):
   
-    modelA = keras.models.load_model(r'TestModel\All')
-    model2 = keras.models.load_model(r'TestModel\CNN\2')
-    model3 = keras.models.load_model(r'TestModel\CNN\3')
-    model4 = keras.models.load_model(r'TestModel\CNN\4')
+    modelA = keras.models.load_model(config.modelAll)
+    model2 = keras.models.load_model(config.CNN2)
+    model3 = keras.models.load_model(config.CNN3)
+    model4 = keras.models.load_model(config.CNN4)
         # settings
    
     imgName=file_path+".png"
@@ -129,14 +130,14 @@ def predict():
             
             pred=Model(file_path)
             model_prediction =  "Hello "+ str(name) + "! Welcome to our website!  Our Algo predicted a  "+str(pred) +" gender!"
-            return render_template('predict.html',prediction=model_prediction)
+            return render_template(config.predict,prediction=model_prediction)
             
         except ValueError:
             return "Please Enter valid values"
 
 @app.route("/rec")
 def Rec():
-    return render_template('Rec.html')        
+    return render_template(config.Rec)        
 
 
 @app.route('/upload', methods=['POST'])
@@ -173,7 +174,7 @@ def upload():
 
 @app.route("/rec2")
 def Rec2():
-    return render_template('Rec.html')       
+    return render_template(config.Rec)       
 
 @app.route('/upload2', methods=['POST'])
 def upload2():
@@ -222,7 +223,7 @@ def ProcessCQT(file):
 
 def ModelCQT(file_path):
   
-    model = keras.models.load_model(r'C:\Users\Yafaa\Desktop\Work\Flask\Flask Project\TestModel\Model Chromoa_cqt')
+    model = keras.models.load_model(config.CQT)
 
     # settings
     img_height = 150
@@ -246,7 +247,7 @@ def ModelCQT(file_path):
 
 @app.route("/recQ")
 def rec3():
-    return render_template('recQ.html')       
+    return render_template(config.recQ)       
 
 @app.route('/upload3', methods=['POST'])
 def upload3():
@@ -275,7 +276,7 @@ def upload3():
         pred=ModelCQT(dst)
         model_prediction =  "Hello ! " + " Welcome to our website!  Our  CQT Algo predicted a  "+str(pred) +" gender!"
         
-        return json.dumps( model_prediction) 
+        return json.dumps(model_prediction) 
        
     
 ################################################################################################################# Chroma
@@ -291,7 +292,7 @@ def ProcessC(file):
 
 def ModelC(file_path):
   
-    model = keras.models.load_model(r'C:\Users\Yafaa\Desktop\Work\Flask\Flask Project\TestModel\Chroma Model')
+    model = keras.models.load_model(config.chroma)
 
     # settings
     img_height = 150
@@ -315,7 +316,7 @@ def ModelC(file_path):
 
 @app.route("/recC")
 def rec4():
-    return render_template('recC.html')       
+    return render_template(config.recC)       
 
 @app.route('/upload4', methods=['POST'])
 def upload4():
@@ -344,7 +345,7 @@ def upload4():
         pred=ModelC(dst)
         model_prediction =  "Hello ! " + " Welcome to our website!  Our  Chromoa Algo predicted a  "+str(pred) +" gender!"
         
-        return json.dumps( model_prediction) 
+        return json.dumps(model_prediction) 
 
 
 ########################################################################################### Wavelet
@@ -378,7 +379,7 @@ def ProcessW(file):
 
 def ModelW(file_path):
   
-    model = keras.models.load_model(r'TestModel\Models Wavlet')
+    model = keras.models.load_model(config.wavelet)
 
     # settings
     img_height = 62
@@ -402,7 +403,7 @@ def ModelW(file_path):
 
 @app.route("/recW")
 def rec5():
-    return render_template('recW.html')       
+    return render_template(config.recW)       
 
 @app.route('/upload5', methods=['POST'])
 def upload5():
@@ -431,7 +432,7 @@ def upload5():
         pred=ModelC(dst)
         model_prediction =  "Hello ! " + " Welcome to our website!  Our  Morlet wavelet Algo predicted a  "+str(pred) +" gender!"
         
-        return json.dumps( model_prediction) 
+        return json.dumps(model_prediction) 
 
 
 
@@ -439,5 +440,5 @@ def upload5():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host=config.host,port=config.port)
     #app.run()
